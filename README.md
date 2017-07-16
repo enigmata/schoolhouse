@@ -16,3 +16,9 @@ Throwing hubris to the wind, I am perfectly happy to tackle even the simplest
 of programming exercises. I feel strongly in the considerable dividends of
 practice, practice, and more practice; I am not above writing yet another
 recursive fibonacci subroutine 😉.
+
+# Waypoints on my Educational Journey
+
+Program of Study | Source Code Directory
+[Programming -- Principles and Practice Using C++](http://www.stroustrup.com/programming.html), by Bjarne Stroustrup | `pppcpp`
+
