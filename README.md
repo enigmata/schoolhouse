@@ -20,5 +20,6 @@ recursive fibonacci subroutine 😉.
 # Waypoints on my Educational Journey
 
 Program of Study | Source Code Directory
-[Programming -- Principles and Practice Using C++](http://www.stroustrup.com/programming.html), by Bjarne Stroustrup | `pppcpp`
+-----------------|------------------------
+[Programming -- Principles and Practice Using C++](http://www.stroustrup.com/programming.html), Second Edition, by Bjarne Stroustrup | `pppcpp/`
 
