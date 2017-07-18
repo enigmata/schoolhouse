@@ -31,5 +31,9 @@
 *.out
 *.app
 
- # Temp files
+# Temp files
 .*.swp
+
+# Cmake files
+CMakeFiles/
+CMakeCache.txt
