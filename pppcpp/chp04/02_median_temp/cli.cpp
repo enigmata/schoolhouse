@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-#include "sol.hpp"
+#include "median_temp.hpp"
 
 int main()
 {

@@ -1,5 +1,5 @@
 #include "catch.hpp"
-#include "sol.hpp"
+#include "median_temp.hpp"
 
 std::vector<double> t0 = {};
 std::vector<double> t1 = {23.5};
