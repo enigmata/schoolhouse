@@ -30,6 +30,8 @@
 *.exe
 *.out
 *.app
+*_cli
+*_test
 
 # Temp files
 .*.swp
