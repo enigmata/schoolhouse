@@ -14,3 +14,4 @@ add_executable(median_temp_cli cli.cpp $<TARGET_OBJECTS:median_temp>)
 # Unit test driver
 add_executable(median_temp_test test.cpp $<TARGET_OBJECTS:median_temp>)
 target_link_libraries(median_temp_test test_main)
+add_test(pppcpp-chp04-02-median_temp_test median_temp_test)

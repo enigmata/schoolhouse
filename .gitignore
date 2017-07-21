@@ -38,6 +38,8 @@
 
 # Cmake generated files
 CMakeFiles/
+Testing/
+CTestTestfile.cmake
 CMakeCache.txt
 cmake_install.cmake
 Makefile
