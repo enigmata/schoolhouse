@@ -1,11 +1,16 @@
 #include <algorithm>
+#include <stdexcept>
 #include <vector>
 
 double median_temp(std::vector<double>& temps)
 {
     double median = 0.0;
 
-    if (!temps.empty()) {
+    if (temps.empty()) {
+        throw std::invalid_argument("At least one temperature is required");
+    }
+    else
+    {
         std::sort(temps.begin(), temps.end());
 
         if (temps.size() % 2 == 0) {

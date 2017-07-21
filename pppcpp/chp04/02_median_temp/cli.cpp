@@ -1,5 +1,7 @@
 #include <iostream>
+#include <stdexcept>
 #include <vector>
+
 #include "median_temp.hpp"
 
 int main()
@@ -14,13 +16,16 @@ int main()
     for (double temp; std::cin >> temp;)
         temps.push_back(temp);
 
-    if (temps.empty())
+    try
     {
-        std::cout << "Error: No temperatures were entered\n";
+        double m = median_temp(temps);
+        std::cout << "The median temperature is " << m << "\n";
+    }
+    catch (std::invalid_argument& e)
+    {
+        std::cout << "Error: " << e.what() << "\n";
         return 1;
     }
-
-    std::cout << "The median temperature is " << median_temp(temps) << "\n";
     
     return 0;
 }

@@ -8,7 +8,7 @@ std::vector<double> t3 = {33.3,23.2,44.4};
 
 TEST_CASE("Simple test of basic variants", "[median]")
 {
-    REQUIRE(median_temp(t0)==0.0);
+    REQUIRE_THROWS_AS(median_temp(t0), std::invalid_argument);
     REQUIRE(median_temp(t1)==23.5);
     REQUIRE(median_temp(t2)==28.25);
     REQUIRE(median_temp(t3)==33.3);
