@@ -2,15 +2,12 @@
 #include <stdexcept>
 #include <vector>
 
-double median_temp(std::vector<double>& temps)
-{
+double median_temp(std::vector<double> &temps) {
     double median = 0.0;
 
     if (temps.empty()) {
         throw std::invalid_argument("At least one temperature is required");
-    }
-    else
-    {
+    } else {
         std::sort(temps.begin(), temps.end());
 
         if (temps.size() % 2 == 0) {
@@ -19,9 +16,7 @@ double median_temp(std::vector<double>& temps)
             int middle_left = (temps.size() / 2) - 1,
                 middle_right = middle_left + 1;
             median = (temps[middle_left] + temps[middle_right]) / 2.0;
-        }
-        else
-        {
+        } else {
             median = temps[temps.size() / 2]; // depend on rounding down
         }
     }
