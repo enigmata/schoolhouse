@@ -2,12 +2,13 @@
 #include <stdexcept>
 #include <vector>
 
-double median_temp(std::vector<double> &temps) {
-  double median = 0.0;
+#include "median_temp.hpp"
 
-  if (temps.empty()) {
-    throw std::invalid_argument("At least one temperature is required");
-  } else {
+std::pair<double, return_code> median_temp(std::vector<double> &temps) {
+  double median = 0.0;
+  return_code rc = return_code::success;
+
+  if (!temps.empty()) {
     std::sort(temps.begin(), temps.end());
 
     if (temps.size() % 2 == 0) {
@@ -18,7 +19,9 @@ double median_temp(std::vector<double> &temps) {
     } else {
       median = temps[temps.size() / 2]; // depend on rounding down
     }
+  } else {
+    rc = return_code::err_no_temps;
   }
 
-  return median;
+  return std::make_pair(median, rc);
 }

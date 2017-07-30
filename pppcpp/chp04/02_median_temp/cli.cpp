@@ -16,16 +16,15 @@ int main()
     for (double temp; std::cin >> temp;)
         temps.push_back(temp);
 
-    try
-    {
-        double m = median_temp(temps);
-        std::cout << "The median temperature is " << m << "\n";
+    auto && [ m, rc ] = median_temp(temps);
+
+    if (rc == return_code::success) {
+      std::cout << "The median temperature is " << m << "\n";
+    } else if (rc == return_code::err_no_temps) {
+      std::cout << "Error: At least one temperature is required!\n";
+    } else {
+      std::cout << "Error: Unknown!\n";
     }
-    catch (std::invalid_argument& e)
-    {
-        std::cout << "Error: " << e.what() << "\n";
-        return 1;
-    }
-    
-    return 0;
+
+    return static_cast<int>(rc);
 }
