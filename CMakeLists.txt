@@ -4,7 +4,7 @@ project(schoolhouse LANGUAGES CXX)
 
 enable_testing()
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 
 # Used by YouCompleteMe (https://github.com/Valloric/YouCompleteMe#c-family-semantic-completion)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
