@@ -6,6 +6,10 @@ enable_testing()
 
 set(CMAKE_CXX_STANDARD 17)
 
+# Test frameworks
+#
+add_subdirectory(testframeworks)
+
 # Each schoolhouse course (book, etc) is a subproject
 #
 add_subdirectory(pppcpp)
