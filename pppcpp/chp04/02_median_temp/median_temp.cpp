@@ -1,5 +1,4 @@
 #include <algorithm>
-#include <stdexcept>
 #include <vector>
 
 #include "median_temp.hpp"
