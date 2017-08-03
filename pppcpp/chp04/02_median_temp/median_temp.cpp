@@ -22,5 +22,5 @@ std::pair<double, return_code> median_temp(std::vector<double> &temps) {
     rc = return_code::err_no_temps;
   }
 
-  return std::make_pair(median, rc);
+  return {median, rc};
 }
