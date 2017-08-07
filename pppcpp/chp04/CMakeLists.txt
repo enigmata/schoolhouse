@@ -4,3 +4,4 @@ project(chp04 LANGUAGES CXX)
 #
 add_subdirectory(02_median_temp)
 add_subdirectory(03_city_dist)
+add_subdirectory(04_guess)
