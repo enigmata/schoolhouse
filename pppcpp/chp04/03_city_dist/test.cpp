@@ -18,28 +18,28 @@ TEST_CASE("Simple test of basic but correct variants", "[distances_good]") {
   //   yields distance metrics all the same:
   //     total == longest == shortest == mean
   std::vector<double> id1 = {23.5};
-  return_type od1 = {23.5, 23.5, 23.5, 23.5};
+  return_type od1 = {23.5, 23.5, 23.5, 23.5, return_code::success};
 
   auto &&rd1 = city_distances(id1);
-  REQUIRE((std::get<4>(rd1) == return_code::success && rd1 == od1));
+  REQUIRE(rd1 == od1);
 
   // variant 2:
-  //   three ctities, two pair-wise distances
+  //   three cities, two pair-wise distances
   //     city 1 <-- 23.2 km --> city 2 <-- 33.3 km --> city 3
   std::vector<double> id2 = {23.2, 33.3};
-  return_type od2 = {56.5, 23.2, 33.3, 28.25};
+  return_type od2 = {56.5, 23.2, 33.3, 28.25, return_code::success};
 
   auto &&rd2 = city_distances(id2);
-  REQUIRE((std::get<4>(rd2) == return_code::success && rd2 == od2));
+  REQUIRE(rd2 == od2);
 
   // variant 3:
-  //   four ctities, three pair-wise distances
+  //   four cities, three pair-wise distances
   //     city 1 <- 33.3 km -> city 2 <- 23.2 km -> city 3 <- 44.4 km -> city 4
   std::vector<double> id3 = {33.3, 23.2, 44.4};
-  return_type od3 = {100.9, 23.2, 44.4, 100.9 / 3};
+  return_type od3 = {100.9, 23.2, 44.4, 100.9 / 3, return_code::success};
 
   auto &&rd3 = city_distances(id3);
-  REQUIRE((std::get<4>(rd3) == return_code::success && rd3 == od3));
+  REQUIRE(rd3 == od3);
 }
 
 TEST_CASE("Test of basic incorrect variants", "[distances_bad]") {
