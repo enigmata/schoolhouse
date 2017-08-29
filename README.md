@@ -21,5 +21,6 @@ recursive fibonacci subroutine 😉.
 
 Program of Study | Source Code Directory
 -----------------|------------------------
-[Programming -- Principles and Practice Using C++](http://www.stroustrup.com/programming.html), Second Edition, by Bjarne Stroustrup | `pppcpp/`
+[Programming: Principles and Practice Using C++](http://www.stroustrup.com/programming.html), Second Edition, by Bjarne Stroustrup | [pppcpp/](./pppcpp)
+[Project Euler](https://projecteuler.net/profile/enigmata.png) | [euler/](./euler)
 

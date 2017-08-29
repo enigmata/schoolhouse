@@ -13,3 +13,4 @@ add_subdirectory(testframeworks)
 # Each schoolhouse course (book, etc) is a subproject
 #
 add_subdirectory(pppcpp)
+add_subdirectory(euler)
