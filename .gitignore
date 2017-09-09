@@ -36,7 +36,8 @@
 # Temp files
 .*.swp
 
-# Cmake generated files
+# Cmake generated & build files
+build/
 CMakeFiles/
 Testing/
 CTestTestfile.cmake
