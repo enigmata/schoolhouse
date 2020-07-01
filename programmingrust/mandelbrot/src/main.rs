@@ -1,11 +1,17 @@
 
 use std::str::FromStr;
+use std::fs::File;
+use std::io::Write;
+use std::io::{Error, ErrorKind};
 
 extern crate num;
 use num::Complex;
 
-#[allow(dead_code)]
-fn parse_cmdline_args<T: FromStr>(args: &str, arg_separator: char) -> Option<(T, T)> {
+extern crate image;
+use image::ColorType;
+use image::png::PNGEncoder;
+
+fn parse_cmdline_arg<T: FromStr>(args: &str, arg_separator: char) -> Option<(T, T)> {
     match args.find(arg_separator) {
         None => None,
         Some(index) => {
@@ -18,34 +24,32 @@ fn parse_cmdline_args<T: FromStr>(args: &str, arg_separator: char) -> Option<(T,
 }
 
 #[test]
-fn test_parse_cmdline_args() {
-    assert_eq!(parse_cmdline_args::<i32>("",        ','), None); 
-    assert_eq!(parse_cmdline_args::<i32>("10,",     ','), None);
-    assert_eq!(parse_cmdline_args::<i32>(",10",     ','), None);
-    assert_eq!(parse_cmdline_args::<i32>("10,20",   ','), Some((10,20))); 
-    assert_eq!(parse_cmdline_args::<i32>("10,20xy", ','), None); 
-    assert_eq!(parse_cmdline_args::<f64>("0.5x",    'x'), None);
-    assert_eq!(parse_cmdline_args::<f64>("0.5x1.5", 'x'), Some((0.5, 1.5)));
+fn test_parse_cmdline_arg() {
+    assert_eq!(parse_cmdline_arg::<i32>("",        ','), None);
+    assert_eq!(parse_cmdline_arg::<i32>("10,",     ','), None);
+    assert_eq!(parse_cmdline_arg::<i32>(",10",     ','), None);
+    assert_eq!(parse_cmdline_arg::<i32>("10,20",   ','), Some((10,20)));
+    assert_eq!(parse_cmdline_arg::<i32>("10,20xy", ','), None);
+    assert_eq!(parse_cmdline_arg::<f64>("0.5x",    'x'), None);
+    assert_eq!(parse_cmdline_arg::<f64>("0.5x1.5", 'x'), Some((0.5, 1.5)));
 }
 
-#[allow(dead_code)]
-fn parse_complex_cmdline_args(args: &str) -> Option<Complex<f64>> {
-    match parse_cmdline_args(args, ',') {
+fn parse_complex_cmdline_arg(args: &str) -> Option<Complex<f64>> {
+    match parse_cmdline_arg(args, ',') {
         Some((re, im)) => Some(Complex{ re, im }),
         None => None
     }
 }
 
 #[test]
-fn test_parse_complex_cmdline_args() {
-    assert_eq!(parse_complex_cmdline_args("1.25,-0.0625"), Some(Complex{re: 1.25, im: -0.0625}));
-    assert_eq!(parse_complex_cmdline_args("2.3, "), None);
-    assert_eq!(parse_complex_cmdline_args(", 0.45"), None);
-    assert_eq!(parse_complex_cmdline_args("1.25 x -0.45"), None);
-    assert_eq!(parse_complex_cmdline_args(","), None);
+fn test_parse_complex_cmdline_arg() {
+    assert_eq!(parse_complex_cmdline_arg("1.25,-0.0625"), Some(Complex{re: 1.25, im: -0.0625}));
+    assert_eq!(parse_complex_cmdline_arg("2.3, "), None);
+    assert_eq!(parse_complex_cmdline_arg(", 0.45"), None);
+    assert_eq!(parse_complex_cmdline_arg("1.25 x -0.45"), None);
+    assert_eq!(parse_complex_cmdline_arg(","), None);
 }
 
-#[allow(dead_code)]
 fn map_img_pixel_to_complex_plane(img_size: (usize, usize),
                                   img_pixel: (usize, usize),
                                   img_coords_top_left: Complex<f64>,
@@ -67,7 +71,6 @@ fn test_map_img_pixel_to_complex_plane() {
                                               Complex { re: -0.5, im: -0.5 });
 }
 
-#[allow(dead_code)]
 fn render_img(img: &mut [u8],
               size: (usize, usize),
               coords_top_left: Complex<f64>,
@@ -89,7 +92,6 @@ fn render_img(img: &mut [u8],
     }
 }
 
-#[allow(dead_code)]
 fn escape_time(mandelbrot_candidate: Complex<f64>, iteration_limit: u32) -> Option<u32> {
     let mut z = Complex {re: 0.0, im: 0.0 };
     for i in 0..iteration_limit {
@@ -101,6 +103,38 @@ fn escape_time(mandelbrot_candidate: Complex<f64>, iteration_limit: u32) -> Opti
     None
 }
 
+fn write_img(filename: &str, img: &[u8], img_size: (usize, usize))
+    -> Result<(), std::io::Error>
+{
+    let file = File::create(filename)?;
+    let encoder = PNGEncoder::new(file);
+    match encoder.encode(&img, img_size.0 as u32, img_size.1 as u32, ColorType::L8) {
+        Err(_e) => Err(Error::new(ErrorKind::Other, "encode failed")),
+        Ok(_o) => Ok(())
+    }
+}
+
 fn main() {
-    println!("Hello, world!");
+    let args: Vec<String> = std::env::args().collect();
+
+    if args.len() != 5 {
+        writeln!(std::io::stderr(),
+                 "Usage: {} <png filename> <image size> <upper-left coords> <lower-right coords>",
+                 args[0])
+            .unwrap();
+        writeln!(std::io::stderr(),
+                 "Example: {} mandel.png 1000x750 -1.20,0.35 -1,0.20", args[0])
+            .unwrap();
+        std::process::exit(1);
+    }
+    let image_size = parse_cmdline_arg(&args[2], 'x')
+        .expect("error parsing image dimensions");
+    let upper_left_coord = parse_complex_cmdline_arg(&args[3])
+        .expect("error parsing upper-left coordinate");
+    let lower_right_coord = parse_complex_cmdline_arg(&args[4])
+        .expect("error parsing lower-right coordinate");
+    let mut image = vec![0; image_size.0 * image_size.1];
+    render_img(&mut image, image_size, upper_left_coord, lower_right_coord);
+    write_img(&args[1], &image, image_size)
+        .expect("error writing image file");
 }
