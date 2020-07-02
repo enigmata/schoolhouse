@@ -11,6 +11,8 @@ extern crate image;
 use image::ColorType;
 use image::png::PNGEncoder;
 
+extern crate crossbeam;
+
 fn parse_cmdline_arg<T: FromStr>(args: &str, arg_separator: char) -> Option<(T, T)> {
     match args.find(arg_separator) {
         None => None,
@@ -92,6 +94,33 @@ fn render_img(img: &mut [u8],
     }
 }
 
+fn concurrent_render_img(img: &mut [u8],
+                         size: (usize, usize),
+                         coords_top_left: Complex<f64>,
+                         coords_bot_right: Complex<f64>)
+{
+    let threads = 8;
+    let rows_per_band = size.1 / threads + 1;
+    {
+        let bands: Vec<&mut [u8]> =
+            img.chunks_mut(rows_per_band * size.0).collect();
+        crossbeam::scope(|spawner| {
+            for (i, band) in bands.into_iter().enumerate() {
+                let top = rows_per_band * i;
+                let height = band.len() / size.0;
+                let band_bounds = (size.0, height);
+                let band_top_left=
+                    map_img_pixel_to_complex_plane(size, (0, top), coords_top_left, coords_bot_right);
+                let band_bot_right =
+                    map_img_pixel_to_complex_plane(size, (size.0, top + height), coords_top_left, coords_bot_right);
+                spawner.spawn(move |_| {
+                    render_img(band, band_bounds, band_top_left, band_bot_right);
+                });
+            }
+        });
+    }
+}
+
 fn escape_time(mandelbrot_candidate: Complex<f64>, iteration_limit: u32) -> Option<u32> {
     let mut z = Complex {re: 0.0, im: 0.0 };
     for i in 0..iteration_limit {
@@ -114,6 +143,8 @@ fn write_img(filename: &str, img: &[u8], img_size: (usize, usize))
     }
 }
 
+
+
 fn main() {
     let args: Vec<String> = std::env::args().collect();
 
@@ -134,7 +165,7 @@ fn main() {
     let lower_right_coord = parse_complex_cmdline_arg(&args[4])
         .expect("error parsing lower-right coordinate");
     let mut image = vec![0; image_size.0 * image_size.1];
-    render_img(&mut image, image_size, upper_left_coord, lower_right_coord);
+    concurrent_render_img(&mut image, image_size, upper_left_coord, lower_right_coord);
     write_img(&args[1], &image, image_size)
         .expect("error writing image file");
 }
