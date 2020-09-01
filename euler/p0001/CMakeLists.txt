@@ -10,6 +10,7 @@ add_library(multiples_of OBJECT multiples_of.cpp)
 add_executable(multiples_of_cli cli.cpp $<TARGET_OBJECTS:multiples_of>)
 
 add_executable(sol sol.cpp)
+add_executable(sol2 sol2.cpp)
 
 # Unit test driver
 add_executable(multiples_of_test test.cpp $<TARGET_OBJECTS:multiples_of>)
