@@ -9,6 +9,8 @@ add_library(multiples_of OBJECT multiples_of.cpp)
 # solution to the exercise
 add_executable(multiples_of_cli cli.cpp $<TARGET_OBJECTS:multiples_of>)
 
+add_executable(sol sol.cpp)
+
 # Unit test driver
 add_executable(multiples_of_test test.cpp $<TARGET_OBJECTS:multiples_of>)
 target_link_libraries(multiples_of_test test_catch_main)
