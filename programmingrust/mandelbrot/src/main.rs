@@ -117,7 +117,7 @@ fn concurrent_render_img(img: &mut [u8],
                     render_img(band, band_bounds, band_top_left, band_bot_right);
                 });
             }
-        });
+        }).unwrap();
     }
 }
 
