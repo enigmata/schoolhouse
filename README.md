@@ -24,4 +24,5 @@ Program of Study | Source Code Directory
 [Programming: Principles and Practice Using C++](http://www.stroustrup.com/programming.html), Second Edition, by Bjarne Stroustrup | [pppcpp/](./pppcpp)
 [Project Euler](https://projecteuler.net/profile/enigmata.png) | [euler/](./euler)
 [Programming Rust](http://shop.oreilly.com/product/0636920040385.do) | [programmingrust/](./programmingrust)
+[ACM ICPC: International Collegiate Programming Contest](https://icpc.global/) | [acm-icpc](./acm-icpc)
 
