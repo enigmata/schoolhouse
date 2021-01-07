@@ -25,4 +25,5 @@ Program of Study | Source Code Directory
 [Project Euler](https://projecteuler.net/profile/enigmata.png) | [euler/](./euler)
 [Programming Rust](http://shop.oreilly.com/product/0636920040385.do) | [programmingrust/](./programmingrust)
 [ACM ICPC: International Collegiate Programming Contest](https://icpc.global/) | [acm-icpc/](./acm-icpc)
+[Codewars](https://www.codewars.com/users/enigmata) | [codewars](./codewars)
 
