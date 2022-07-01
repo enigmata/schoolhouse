@@ -26,4 +26,4 @@ Program of Study | Source Code Directory
 [Programming Rust](http://shop.oreilly.com/product/0636920040385.do) | [programmingrust/](./programmingrust)
 [ACM ICPC: International Collegiate Programming Contest](https://icpc.global/) | [acm-icpc/](./acm-icpc)
 [Codewars](https://www.codewars.com/users/enigmata) | [codewars/](./codewars)
-
+[Rustlings](https://github.com/rust-lang/rustlings), small exercises to help in reading and writing rust | [rustlings/](./rustlings)
